@@ -22,16 +22,37 @@ const text = [
 const input = document.querySelector("#input");
 const data = document.querySelector("#section2");
 
+const shuffle =(array)=> {
+    let currentIndex = array.length,
+        randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]
+        ];
+    }
+
+    return array;
+}
+
 const generate =()=>{
     console.log(input.value)
     if(isNaN(input.value) || input.value < 0 || input.value > 9){
         let rendomPara = Math.floor(Math.random()*text.length);
         data.innerHTML = `<p>${text[rendomPara]}</p>`
     }else{
-      let all = text.slice(0,input.value);
+      let localText = shuffle(text);
+      let all = localText.slice(0,input.value);
       let para = all.map((item)=>{
         return `<p>${item}</p>`
       })
-      data.innerHTML = para;
+      data.innerHTML = para.join();
     }
 }
